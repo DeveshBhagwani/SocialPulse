@@ -67,3 +67,40 @@ export const getTopPosts = async (req, res, next) => {
   }
 };
 
+export const getAnalyticsSummary = async (req, res, next) => {
+  try {
+    const summary = await Post.aggregate([
+      {
+        $match: {
+          user: req.user._id
+        }
+      },
+      {
+        $project: {
+          likesCount: { $size: "$likes" },
+          commentsCount: { $size: "$comments" }
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          totalPosts: { $sum: 1 },
+          totalLikes: { $sum: "$likesCount" },
+          totalComments: { $sum: "$commentsCount" }
+        }
+      }
+    ]);
+
+    if (!summary.length) {
+      return res.json({
+        totalPosts: 0,
+        totalLikes: 0,
+        totalComments: 0
+      });
+    }
+
+    res.json(summary[0]);
+  } catch (error) {
+    next(error);
+  }
+};
