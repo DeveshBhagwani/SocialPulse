@@ -12,6 +12,9 @@ export default function Sidebar() {
         <p className="cursor-pointer text-gray-400 hover:text-white transition">
           Feed
         </p>
+        <p className="cursor-pointer hover:text-white">
+          Profile
+        </p>
       </nav>
     </aside>
   );

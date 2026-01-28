@@ -16,7 +16,7 @@ export default function EngagementLineChart({ days }) {
     api.get(`/analytics/engagement?days=${days}`)
       .then(res => setData(res.data))
       .catch(console.error);
-  }, [days]); // 🔥 re-fetch when days changes
+  }, [days]); // re-fetch when days changes
 
   if (!data.length) {
     return (

@@ -4,9 +4,9 @@ import authRoutes from "./routes/auth.routes.js";
 import errorHandler from "./middleware/error.middleware.js";
 import postRoutes from "./routes/post.routes.js";
 import analyticsRoutes from "./routes/analytics.routes.js";
-
+import userRoutes from "./routes/user.routes.js";
 const app = express();
-
+app.use("/api/users", userRoutes);
 app.use(cors());
 app.use(express.json());
 // Routes FIRST

@@ -21,6 +21,14 @@ const userSchema = new mongoose.Schema(
     followersCount: {
       type: Number,
       default: 0
+    },
+    bio: {
+      type: String,
+      default: ""
+    },
+    avatar: {
+      type: String,
+      default: ""
     }
   },
   { timestamps: true }
