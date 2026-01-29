@@ -55,6 +55,14 @@ export default function Profile() {
                 <p className="text-xl font-semibold">{stats.comments}</p>
                 <p className="text-sm text-gray-500">Comments</p>
               </div>
+              <div>
+                <p className="text-xl font-semibold">{stats.followers}</p>
+                <p className="text-xl font-semibold">{stats.followers}</p>
+              </div>
+              <div>
+                <p className="text-xl font-semibold">{stats.following}</p>
+                <p className="text-sm text-gray-500">Following</p>
+              </div>
             </div>
 
           </div>
