@@ -5,6 +5,7 @@ import EngagementLineChart from "../components/charts/EngagementLineChart";
 import TopPostsBarChart from "../components/charts/TopPostsBarChart";
 import StatCard from "../components/StatCard";
 import api from "../api/axios";
+import AudienceGrowthChart from "../components/charts/AudienceGrowthChart";
 
 export default function Dashboard() {
   const [stats, setStats] = useState(null);
@@ -65,6 +66,7 @@ export default function Dashboard() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             <EngagementLineChart days={days} />
             <TopPostsBarChart />
+            <AudienceGrowthChart days={days} />
           </div>
 
         </div>

@@ -1,5 +1,6 @@
 import User from "../models/user.model.js";
 import Post from "../models/post.model.js";
+import FollowerEvent from "../models/followerEvent.model.js";
 
 export const getMyProfile = async (req, res, next) => {
   try {
@@ -83,6 +84,10 @@ export const followUser = async (req, res, next) => {
 
     await currentUser.save();
     await userToFollow.save();
+    await FollowerEvent.create({
+      user: userToFollow._id,
+      follower: currentUser._id
+    });
 
     res.json({
       message: "User followed successfully"

@@ -1,5 +1,45 @@
 import Post from "../models/post.model.js";
 import mongoose from "mongoose";
+import FollowerEvent from "../models/followerEvent.model.js";
+import mongoose from "mongoose";
+
+export const getAudienceGrowth = async (req, res, next) => {
+  try {
+    const days = Number(req.query.days) || 7;
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - days);
+
+    const data = await FollowerEvent.aggregate([
+      {
+        $match: {
+          user: new mongoose.Types.ObjectId(req.user._id),
+          createdAt: { $gte: startDate }
+        }
+      },
+      {
+        $project: {
+          date: {
+            $dateToString: {
+              format: "%Y-%m-%d",
+              date: "$createdAt"
+            }
+          }
+        }
+      },
+      {
+        $group: {
+          _id: "$date",
+          newFollowers: { $sum: 1 }
+        }
+      },
+      { $sort: { _id: 1 } }
+    ]);
+
+    res.json(data);
+  } catch (error) {
+    next(error);
+  }
+};
 
 export const getEngagementOverTime = async (req, res, next) => {
   try {

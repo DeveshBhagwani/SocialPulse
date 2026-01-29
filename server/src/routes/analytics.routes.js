@@ -1,5 +1,6 @@
 import express from "express";
 import { getAnalyticsSummary } from "../controllers/analytics.controller.js";
+import { getAudienceGrowth } from "../controllers/analytics.controller.js";
 
 import {
   getEngagementOverTime,
@@ -12,5 +13,6 @@ const router = express.Router();
 router.get("/engagement", protect, getEngagementOverTime);
 router.get("/top-posts", protect, getTopPosts);
 router.get("/summary", protect, getAnalyticsSummary);
+router.get("/audience-growth", protect, getAudienceGrowth);
 
 export default router;
