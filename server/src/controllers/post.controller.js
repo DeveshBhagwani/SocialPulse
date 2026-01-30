@@ -1,3 +1,4 @@
+import User from "../models/user.model.js";
 import Post from "../models/post.model.js";
 
 export const createPost = async (req, res, next) => {
@@ -65,6 +66,27 @@ export const commentPost = async (req, res, next) => {
     res.status(201).json(post.comments);
   } 
   catch (error) {
+    next(error);
+  }
+};
+
+export const getPersonalizedFeed = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.user._id);
+
+    const feedUserIds = [
+      ...user.following,
+      req.user._id 
+    ];
+
+    const posts = await Post.find({
+      user: { $in: feedUserIds }
+    })
+      .populate("user", "username avatar")
+      .sort({ createdAt: -1 });
+
+    res.json(posts);
+  } catch (error) {
     next(error);
   }
 };
