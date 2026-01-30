@@ -127,3 +127,47 @@ export const unfollowUser = async (req, res, next) => {
     next(error);
   }
 };
+
+export const getPublicProfile = async (req, res, next) => {
+  try {
+    const user = await User.findById(req.params.id)
+      .select("-password")
+      .populate("followers", "_id")
+      .populate("following", "_id");
+
+    if (!user) {
+      res.status(404);
+      throw new Error("User not found");
+    }
+
+    const stats = await Post.aggregate([
+      { $match: { user: user._id } },
+      {
+        $project: {
+          likesCount: { $size: "$likes" },
+          commentsCount: { $size: "$comments" }
+        }
+      },
+      {
+        $group: {
+          _id: null,
+          posts: { $sum: 1 },
+          likes: { $sum: "$likesCount" },
+          comments: { $sum: "$commentsCount" }
+        }
+      }
+    ]);
+
+    const isFollowing = user.followers.some(
+      (f) => f._id.equals(req.user._id)
+    );
+
+    res.json({
+      user,
+      stats: stats[0] || { posts: 0, likes: 0, comments: 0 },
+      isFollowing
+    });
+  } catch (error) {
+    next(error);
+  }
+};
