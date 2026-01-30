@@ -1,7 +1,6 @@
 import Post from "../models/post.model.js";
 import mongoose from "mongoose";
 import FollowerEvent from "../models/followerEvent.model.js";
-import mongoose from "mongoose";
 
 export const getAudienceGrowth = async (req, res, next) => {
   try {
