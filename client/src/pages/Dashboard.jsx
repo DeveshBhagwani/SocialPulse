@@ -1,11 +1,10 @@
-const [days, setDays] = useState(7);
 import { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
 import EngagementLineChart from "../components/charts/EngagementLineChart";
 import TopPostsBarChart from "../components/charts/TopPostsBarChart";
+import AudienceGrowthChart from "../components/charts/AudienceGrowthChart";
 import StatCard from "../components/StatCard";
 import api from "../api/axios";
-import AudienceGrowthChart from "../components/charts/AudienceGrowthChart";
 
 export default function Dashboard() {
   const [stats, setStats] = useState(null);

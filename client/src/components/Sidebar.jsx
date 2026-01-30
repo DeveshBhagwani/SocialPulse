@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 export default function Sidebar() {
   return (
     <aside className="w-64 bg-gray-900 text-gray-100 min-h-screen px-6 py-8">
@@ -6,15 +8,38 @@ export default function Sidebar() {
       </h1>
 
       <nav className="space-y-4 text-sm">
-        <p className="cursor-pointer text-white font-medium">
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            isActive
+              ? "block text-white font-medium"
+              : "block text-gray-400 hover:text-white transition"
+          }
+        >
           Dashboard
-        </p>
-        <p className="cursor-pointer text-gray-400 hover:text-white transition">
+        </NavLink>
+
+        <NavLink
+          to="/feed"
+          className={({ isActive }) =>
+            isActive
+              ? "block text-white font-medium"
+              : "block text-gray-400 hover:text-white transition"
+          }
+        >
           Feed
-        </p>
-        <p className="cursor-pointer hover:text-white">
+        </NavLink>
+
+        <NavLink
+          to="/profile"
+          className={({ isActive }) =>
+            isActive
+              ? "block text-white font-medium"
+              : "block text-gray-400 hover:text-white transition"
+          }
+        >
           Profile
-        </p>
+        </NavLink>
       </nav>
     </aside>
   );
