@@ -6,14 +6,25 @@ import postRoutes from "./routes/post.routes.js";
 import analyticsRoutes from "./routes/analytics.routes.js";
 import userRoutes from "./routes/user.routes.js";
 const app = express();
-app.use(cors());
-const corsOptions = {
-  origin: "http://localhost:5173",
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://YOUR_FRONTEND_DOMAIN.vercel.app"
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed"));
+    }
+  },
+  credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
-};
-app.options("*", cors(corsOptions));
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
+}));
+
+app.options("*", cors());
 app.use(express.json());
 // Routes FIRST
 app.use("/api/auth", authRoutes);
