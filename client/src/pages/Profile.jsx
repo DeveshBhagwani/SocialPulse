@@ -8,10 +8,14 @@ export default function Profile() {
   useEffect(() => {
     api.get("/users/me")
       .then(res => setData(res.data))
-      .catch(console.error);
+      .catch(err => {
+        console.error(err);
+        setData({ error: true});
+      });
   }, []);
 
   if (!data) return <p className="p-8">Loading...</p>;
+  if (data.error) return <p className="p-8">Failed to load profile</p>;
 
   const { user, stats } = data;
 
@@ -57,7 +61,7 @@ export default function Profile() {
               </div>
               <div>
                 <p className="text-xl font-semibold">{stats.followers}</p>
-                <p className="text-xl font-semibold">{stats.followers}</p>
+                <p className="text-sm text-gray-500">Followers</p>
               </div>
               <div>
                 <p className="text-xl font-semibold">{stats.following}</p>

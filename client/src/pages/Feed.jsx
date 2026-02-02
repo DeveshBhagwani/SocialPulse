@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import Sidebar from "../components/Sidebar";
+import SkeletonCard from "../components/SkeletonCard";
 
 export default function Feed() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState(null);
 
   useEffect(() => {
     api.get("/posts/feed")
@@ -15,13 +16,21 @@ export default function Feed() {
     <div className="flex">
       <Sidebar />
 
-      <main className="flex-1 bg-gray-50 min-h-screen">
+      <main className="flex-1 min-h-screen bg-gray-50 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto px-8 py-10">
-          <h2 className="text-3xl font-bold mb-8">Your Feed</h2>
+          <h2 className="text-3xl font-bold mb-8 text-gray-900 dark:text-gray-100">
+            Your Feed
+          </h2>
 
-          {posts.length === 0 ? (
-            <div className="bg-white border rounded-xl p-8 text-center">
-              <p className="text-gray-600 mb-2">
+          {!posts ? (
+            <div className="space-y-6">
+              <SkeletonCard />
+              <SkeletonCard />
+              <SkeletonCard />
+            </div>
+          ) : posts.length === 0 ? (
+            <div className="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-xl p-8 text-center">
+              <p className="text-gray-600 dark:text-gray-300 mb-2">
                 Your feed is empty
               </p>
               <p className="text-sm text-gray-500">
@@ -33,13 +42,13 @@ export default function Feed() {
               {posts.map(post => (
                 <div
                   key={post._id}
-                  className="bg-white rounded-xl shadow-sm border p-6"
+                  className="bg-white dark:bg-gray-800 border dark:border-gray-700 rounded-xl shadow-sm p-6"
                 >
                   {/* Header */}
                   <div className="flex items-center justify-between mb-4">
                     <a
                       href={`/users/${post.user._id}`}
-                      className="font-semibold hover:underline"
+                      className="font-semibold text-gray-900 dark:text-gray-100 hover:underline"
                     >
                       {post.user.username}
                     </a>
@@ -49,7 +58,7 @@ export default function Feed() {
                   </div>
 
                   {/* Content */}
-                  <p className="text-gray-800 mb-4">
+                  <p className="text-gray-800 dark:text-gray-200 mb-4">
                     {post.text}
                   </p>
 
