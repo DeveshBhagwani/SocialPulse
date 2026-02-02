@@ -8,7 +8,7 @@ import userRoutes from "./routes/user.routes.js";
 const app = express();
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://YOUR_FRONTEND_DOMAIN.vercel.app"
+  "https://social-pulse-beryl.vercel.app/"
 ];
 
 app.use(cors({
