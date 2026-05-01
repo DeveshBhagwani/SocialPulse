@@ -17,11 +17,16 @@ const postSchema = new mongoose.Schema(
     },
     text: {
       type: String,
-      required: true,
-      trim: true
+      trim: true,
+      default: "",
+      maxlength: 1000
     },
     image: {
       type: String // Cloudinary URL
+    },
+    imagePublicId: {
+      type: String,
+      default: ""
     },
     likes: [
       {
@@ -33,5 +38,8 @@ const postSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+postSchema.index({ user: 1, createdAt: -1 });
+postSchema.index({ createdAt: -1 });
 
 export default mongoose.model("Post", postSchema);
